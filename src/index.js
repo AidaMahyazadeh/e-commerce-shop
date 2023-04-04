@@ -1,13 +1,33 @@
+/* eslint-disable no-undef */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import {  createBrowserRouter,
+  RouterProvider, } from 'react-router-dom';
+import './index.scss';
+// eslint-disable-next-line no-unused-vars
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+import Home from './routes/home/home';
+import Navigation from './routes/navigation/navigation'; import SignIn from './routes/sign-in/sign-in';
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Navigation />,
+    children: [
+      {
+        path :'/',
+        element: <Home />,
+      },
+      {
+        path : 'sign-in',
+        element: <SignIn />,
+      }
+    ]
+  }
+]);
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
