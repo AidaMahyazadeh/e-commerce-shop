@@ -8,7 +8,8 @@ import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Home from './routes/home/home';
-import Navigation from './routes/navigation/navigation'; import SignIn from './routes/sign-in/sign-in';
+import Navigation from './routes/navigation/navigation'; 
+import Authentication from './routes/authentication/authentication';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,8 +20,8 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path : 'sign-in',
-        element: <SignIn />,
+        path : 'auth',
+        element: <Authentication />,
       }
     ]
   }
