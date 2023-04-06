@@ -14,6 +14,7 @@ import Shop from './routes/shop/shop';
 import ProductsProvider  from './contexts/product.context';
 import CartProvider from './contexts/cart.context';
 import './index.scss';
+import Checkout from './routes/checkout/checkout';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,9 @@ const router = createBrowserRouter([
       {
         path : 'shop',
         element: <Shop />,
+      },  {
+        path : 'checkout',
+        element: <Checkout />,
       }
     ]
   }

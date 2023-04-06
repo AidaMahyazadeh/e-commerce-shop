@@ -1,12 +1,78 @@
-import { createContext,useState } from "react";
+import { createContext,useState,useEffect } from "react";
+
+function addCartItem(cartItems,productToAdd){
+const existingCartItem=cartItems.find((cartItem)=>cartItem.id===productToAdd.id);
+
+if(existingCartItem){
+    return cartItems.map((cartItem)=>cartItem.id===productToAdd.id ?{...cartItem,quantity:cartItem.quantity+1} : cartItem)
+}
+
+    return [...cartItems,{...productToAdd,quantity:1}]
+}
+
+function removeCartItem(cartItems,cartItemToRemove){
+const existingCartItem=cartItems.map((cartItem)=>
+    cartItem.id===cartItemToRemove.id
+)
+if(existingCartItem.quantity===1){
+    return cartItems.filter(cartItem=>cartItem.id !== cartItemToRemove.id)
+}
+return cartItems.map((cartItem)=>cartItem.id===cartItemToRemove.id ?{...cartItem,quantity:cartItem.quantity-1} : cartItem)
+}
+
+function clearCartItem(cartItems,cartItemToClear){
+return cartItems.filter((cartItem)=>cartItem.id !== cartItemToClear.id)
+}
 
 export const CartContext=createContext({
     isCartOpen:false,
-    setIsCartOpen :()=>{}
+    setIsCartOpen :()=>{},
+    cartItems:[],
+    addItemToCart:()=>{},
+    removeItemFromCart:()=>{},
+    clearItemFromCart :()=>{},
+    cartCount:0,
+    total :0
 });
 function CartProvider({children}){
  const[isCartOpen,setIsCartOpen]=useState(false);
- const value={isCartOpen,setIsCartOpen}
+ const[cartItems,setCatItem]=useState([]);
+ const [cartCount,setCartCount]=useState(0);
+ const [cartTotal,setCartTotal]=useState(0);
+
+ 
+ useEffect(()=>{
+ const newCartCount=cartItems.reduce((total,cartItem)=>total+cartItem.quantity,0);
+ setCartCount(newCartCount);
+ },[cartItems])
+
+ useEffect(()=>{
+    const newCartTotal=cartItems.reduce((total,cartItem)=> total+cartItem.quantity *cartItem.price,0)
+    setCartTotal(newCartTotal)
+ },[cartItems])
+
+ function addItemToCart(productToAdd){
+  setCatItem(addCartItem(cartItems,productToAdd))
+ }
+
+function removeItemToCart(cartItemToClear){
+    setCatItem(removeCartItem(cartItems,cartItemToClear))
+}
+
+function clearItemFromCart(cartItemToRemove){
+    setCatItem(clearCartItem(cartItems,cartItemToRemove))
+}
+
+const value={
+    isCartOpen,
+    setIsCartOpen,
+    addItemToCart,
+    removeItemToCart,
+    clearItemFromCart,
+    cartItems,
+    cartCount,
+    cartTotal
+};
 return(
 <CartContext.Provider value={value}>
     {children}
