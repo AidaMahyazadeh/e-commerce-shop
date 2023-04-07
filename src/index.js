@@ -11,7 +11,7 @@ import Home from './routes/home/home';
 import Navigation from './routes/navigation/navigation'; 
 import Authentication from './routes/authentication/authentication';
 import Shop from './routes/shop/shop';
-import ProductsProvider  from './contexts/product.context';
+import CategoriesProvider  from './contexts/categories.context';
 import CartProvider from './contexts/cart.context';
 import './index.scss';
 import Checkout from './routes/checkout/checkout';
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         element: <Authentication />,
       },
       {
-        path : 'shop',
+        path : 'shop/*',
         element: <Shop />,
       },  {
         path : 'checkout',
@@ -42,11 +42,11 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <UserProvider>
-      <ProductsProvider>
+      <CategoriesProvider>
         <CartProvider>
          <RouterProvider router={router} />
         </CartProvider>
-      </ProductsProvider>
+      </CategoriesProvider>
     </UserProvider>
   </React.StrictMode>
 );

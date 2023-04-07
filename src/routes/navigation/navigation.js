@@ -7,7 +7,7 @@ import {CartContext} from '../../contexts/cart.context';
 import {ReactComponent as CrwnLogo } from '../../assets/crown.svg';
 
 import { signOutUser } from "../../utils/firebase/firebase.utils";
-import './navigation.stles.scss';
+import './navigation.styles.scss';
 
 function Navigation(){
   const{currentUser}=useContext(userContext);
